@@ -1,0 +1,40 @@
+version: "3.8"
+
+services:
+  node:
+    container_name:
+      node
+    restart: always
+    build:
+      target: development
+      dockerfile: Dockerfile
+      context: .
+    env_file:
+      - .env.development
+    depends_on:
+      - postgres
+    networks:
+      - net
+    volumes:
+      - ./src/:/usr/src/app
+
+  postgres:
+    container_name:
+      postgres
+    networks:
+      - net
+    image: postgres:16.2-alpine3.19
+    env_file:
+      - .env.development
+    restart: always
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./data:/var/lib/postgresql/data/pgdata
+
+networks:
+  net:
+
+volumes:
+  postgres_database:
+    driver: local
