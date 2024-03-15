@@ -1,26 +1,36 @@
 import { Injectable } from '@nestjs/common';
 import { CreateManufacturerDto } from '../dto/create-manufacturer.dto';
 import { UpdateManufacturerDto } from '../dto/update-manufacturer.dto';
+import { ManufacturersRepository } from '../repositories/manufacturers.repository';
+import { ManufactureResponse } from '../types';
 
 @Injectable()
 export class ManufacturersService {
-  create(createManufacturerDto: CreateManufacturerDto) {
-    return 'This action adds a new manufacturer';
+  constructor(
+    private readonly manufacturesRepository: ManufacturersRepository,
+  ) {}
+  create(
+    createManufacturerDto: CreateManufacturerDto,
+  ): Promise<ManufactureResponse> {
+    return this.manufacturesRepository.create(createManufacturerDto);
   }
 
-  findAll() {
-    return `This action returns all manufacturers`;
+  findAll(): Promise<ManufactureResponse[]> {
+    return this.manufacturesRepository.get();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} manufacturer`;
+  findOne(id: string): Promise<ManufactureResponse> {
+    return this.manufacturesRepository.getOne(id);
   }
 
-  update(id: number, updateManufacturerDto: UpdateManufacturerDto) {
-    return `This action updates a #${id} manufacturer`;
+  update(
+    id: string,
+    updateManufacturerDto: UpdateManufacturerDto,
+  ): Promise<void> {
+    return this.manufacturesRepository.update(id, updateManufacturerDto);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} manufacturer`;
+  remove(id: string): Promise<void> {
+    return this.manufacturesRepository.delete(id);
   }
 }
