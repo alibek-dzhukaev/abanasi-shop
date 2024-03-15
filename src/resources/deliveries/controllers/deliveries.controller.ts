@@ -10,14 +10,18 @@ import {
 import { DeliveriesService } from '../services/deliveries.service';
 import { CreateDeliveryDto } from '../dto/create-delivery.dto';
 import { UpdateDeliveryDto } from '../dto/update-delivery.dto';
-import { ApiNoContentResponse, ApiOkResponse } from '@nestjs/swagger';
+import {
+  ApiCreatedResponse,
+  ApiNoContentResponse,
+  ApiOkResponse,
+} from '@nestjs/swagger';
 import { DeliveryResponse } from '../types';
 
 @Controller('deliveries')
 export class DeliveriesController {
   constructor(private readonly deliveriesService: DeliveriesService) {}
 
-  @ApiOkResponse({
+  @ApiCreatedResponse({
     type: DeliveryResponse,
   })
   @Post()
@@ -38,7 +42,7 @@ export class DeliveriesController {
   })
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.deliveriesService.findOne(+id);
+    return this.deliveriesService.findOne(id);
   }
 
   @ApiNoContentResponse()
@@ -47,12 +51,12 @@ export class DeliveriesController {
     @Param('id') id: string,
     @Body() updateDeliveryDto: UpdateDeliveryDto,
   ) {
-    return this.deliveriesService.update(+id, updateDeliveryDto);
+    return this.deliveriesService.update(id, updateDeliveryDto);
   }
 
   @ApiNoContentResponse()
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.deliveriesService.remove(+id);
+    return this.deliveriesService.remove(id);
   }
 }

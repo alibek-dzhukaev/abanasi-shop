@@ -1,26 +1,35 @@
 import { Injectable } from '@nestjs/common';
 import { CreatePurchaseItemDto } from '../dto/create-purchase-item.dto';
 import { UpdatePurchaseItemDto } from '../dto/update-purchase-item.dto';
+import { PurchaseItemsRepository } from '../repositories/purchase-items.repository';
+import { PurchaseItem } from '../entities/purchase-item.entity';
 
 @Injectable()
 export class PurchaseItemsService {
-  create(createPurchaseItemDto: CreatePurchaseItemDto) {
-    return 'This action adds a new purchaseItem';
+  constructor(
+    private readonly purchaseItemsRepository: PurchaseItemsRepository,
+  ) {}
+
+  create(createPurchaseItemDto: CreatePurchaseItemDto): Promise<PurchaseItem> {
+    return this.purchaseItemsRepository.create(createPurchaseItemDto);
   }
 
-  findAll() {
-    return `This action returns all purchaseItem`;
+  findAll(): Promise<PurchaseItem[]> {
+    return this.purchaseItemsRepository.get();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} purchaseItem`;
+  findOne(id: string): Promise<PurchaseItem> {
+    return this.purchaseItemsRepository.getOne(id);
   }
 
-  update(id: number, updatePurchaseItemDto: UpdatePurchaseItemDto) {
-    return `This action updates a #${id} purchaseItem`;
+  update(
+    id: string,
+    updatePurchaseItemDto: UpdatePurchaseItemDto,
+  ): Promise<void> {
+    return this.purchaseItemsRepository.update(id, updatePurchaseItemDto);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} purchaseItem`;
+  remove(id: string): Promise<void> {
+    return this.purchaseItemsRepository.delete(id);
   }
 }

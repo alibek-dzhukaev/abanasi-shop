@@ -10,7 +10,12 @@ import {
 import { CustomersService } from '../services/customers.service';
 import { CreateCustomerDto } from '../dto/create-customer.dto';
 import { UpdateCustomerDto } from '../dto/update-customer.dto';
-import { ApiNoContentResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger';
+import {
+  ApiCreatedResponse,
+  ApiNoContentResponse,
+  ApiOkResponse,
+  ApiTags,
+} from '@nestjs/swagger';
 import { CustomerResponse } from '../types';
 import { Customer } from '../entities/customer.entity';
 
@@ -19,7 +24,7 @@ import { Customer } from '../entities/customer.entity';
 export class CustomersController {
   constructor(private readonly customersService: CustomersService) {}
 
-  @ApiOkResponse({
+  @ApiCreatedResponse({
     type: CustomerResponse,
   })
   @Post()

@@ -11,9 +11,9 @@ export class PurchaseItem {
   @Column({ name: 'product_id' })
   productId: string;
 
-  @Column({ name: 'product_count' })
-  productCount: string;
+  @Column({ name: 'product_count', type: 'int' })
+  productCount: number;
 
-  @Column({ name: 'product_price' })
-  productPrice: string;
+  @Column({ name: 'product_price', type: 'int' })
+  productPrice: number;
 }
