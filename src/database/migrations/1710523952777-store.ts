@@ -1,12 +1,9 @@
 import { MigrationInterface, QueryRunner } from 'typeorm';
 
-export class DeliveryUpdate1710248792530 implements MigrationInterface {
-  name = 'DeliveryUpdate1710248792530';
+export class Store1710523952777 implements MigrationInterface {
+  name = 'Store1710523952777';
 
   public async up(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.query(
-      `ALTER TABLE "price_change" ADD "product_id" character varying NOT NULL`,
-    );
     await queryRunner.query(
       `ALTER TABLE "delivery" ADD "delivery_id" uuid NOT NULL DEFAULT uuid_generate_v4()`,
     );
@@ -26,10 +23,7 @@ export class DeliveryUpdate1710248792530 implements MigrationInterface {
       `ALTER TABLE "purchase_item" ADD CONSTRAINT "PK_625fdb5e86b1be21a962aa9c442" PRIMARY KEY ("purchase_id", "purchase_item_id")`,
     );
     await queryRunner.query(
-      `ALTER TABLE "price_change" DROP COLUMN "new_price"`,
-    );
-    await queryRunner.query(
-      `ALTER TABLE "price_change" ADD "new_price" real NOT NULL`,
+      `ALTER TABLE "price_change" ADD "product_id" character varying NOT NULL`,
     );
     await queryRunner.query(
       `ALTER TABLE "delivery" DROP CONSTRAINT "PK_5a09d26f1be543fd608e7eaafd0"`,
@@ -59,9 +53,45 @@ export class DeliveryUpdate1710248792530 implements MigrationInterface {
     await queryRunner.query(
       `ALTER TABLE "purchase_item" ADD "purchase_id" character varying NOT NULL`,
     );
+    await queryRunner.query(
+      `ALTER TABLE "purchase_item" DROP COLUMN "product_count"`,
+    );
+    await queryRunner.query(
+      `ALTER TABLE "purchase_item" ADD "product_count" integer NOT NULL`,
+    );
+    await queryRunner.query(
+      `ALTER TABLE "purchase_item" DROP COLUMN "product_price"`,
+    );
+    await queryRunner.query(
+      `ALTER TABLE "purchase_item" ADD "product_price" integer NOT NULL`,
+    );
+    await queryRunner.query(
+      `ALTER TABLE "price_change" DROP COLUMN "new_price"`,
+    );
+    await queryRunner.query(
+      `ALTER TABLE "price_change" ADD "new_price" real NOT NULL`,
+    );
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
+    await queryRunner.query(
+      `ALTER TABLE "price_change" DROP COLUMN "new_price"`,
+    );
+    await queryRunner.query(
+      `ALTER TABLE "price_change" ADD "new_price" integer NOT NULL`,
+    );
+    await queryRunner.query(
+      `ALTER TABLE "purchase_item" DROP COLUMN "product_price"`,
+    );
+    await queryRunner.query(
+      `ALTER TABLE "purchase_item" ADD "product_price" character varying NOT NULL`,
+    );
+    await queryRunner.query(
+      `ALTER TABLE "purchase_item" DROP COLUMN "product_count"`,
+    );
+    await queryRunner.query(
+      `ALTER TABLE "purchase_item" ADD "product_count" character varying NOT NULL`,
+    );
     await queryRunner.query(
       `ALTER TABLE "purchase_item" DROP COLUMN "purchase_id"`,
     );
@@ -91,10 +121,7 @@ export class DeliveryUpdate1710248792530 implements MigrationInterface {
       `ALTER TABLE "delivery" ADD CONSTRAINT "PK_5a09d26f1be543fd608e7eaafd0" PRIMARY KEY ("product_id", "delivery_id")`,
     );
     await queryRunner.query(
-      `ALTER TABLE "price_change" DROP COLUMN "new_price"`,
-    );
-    await queryRunner.query(
-      `ALTER TABLE "price_change" ADD "new_price" integer NOT NULL`,
+      `ALTER TABLE "price_change" DROP COLUMN "product_id"`,
     );
     await queryRunner.query(
       `ALTER TABLE "purchase_item" DROP CONSTRAINT "PK_625fdb5e86b1be21a962aa9c442"`,
@@ -112,8 +139,5 @@ export class DeliveryUpdate1710248792530 implements MigrationInterface {
       `ALTER TABLE "delivery" ADD CONSTRAINT "PK_bc722c191194d33e0d088f0780c" PRIMARY KEY ("product_id")`,
     );
     await queryRunner.query(`ALTER TABLE "delivery" DROP COLUMN "delivery_id"`);
-    await queryRunner.query(
-      `ALTER TABLE "price_change" DROP COLUMN "product_id"`,
-    );
   }
 }
