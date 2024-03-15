@@ -32,9 +32,19 @@ services:
     volumes:
       - ./data:/var/lib/postgresql/data/pgdata
 
+  redis:
+    container_name: redis
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis:/data
+
 networks:
   net:
 
 volumes:
   postgres_database:
+    driver: local
+  redis:
     driver: local
