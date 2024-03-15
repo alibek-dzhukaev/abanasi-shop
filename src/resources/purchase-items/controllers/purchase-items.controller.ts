@@ -27,7 +27,7 @@ export class PurchaseItemsController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.purchaseItemService.findOne(+id);
+    return this.purchaseItemService.findOne(id);
   }
 
   @Patch(':id')
@@ -35,11 +35,11 @@ export class PurchaseItemsController {
     @Param('id') id: string,
     @Body() updatePurchaseItemDto: UpdatePurchaseItemDto,
   ) {
-    return this.purchaseItemService.update(+id, updatePurchaseItemDto);
+    return this.purchaseItemService.update(id, updatePurchaseItemDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.purchaseItemService.remove(+id);
+    return this.purchaseItemService.remove(id);
   }
 }

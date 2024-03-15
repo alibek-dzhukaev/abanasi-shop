@@ -15,6 +15,7 @@ const config = {
   migrations: ['dist/migrations/*{.ts,.js}'],
   synchronize: false,
   migrationsTransactionMode: 'each',
+  logger: 'advanced-console',
 } satisfies DataSourceOptions;
 
 export default registerAs('typeorm', () => config);
