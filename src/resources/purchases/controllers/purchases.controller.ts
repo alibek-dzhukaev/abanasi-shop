@@ -10,7 +10,9 @@ import {
 import { PurchasesService } from '../services/purchases.service';
 import { CreatePurchaseDto } from '../dto/create-purchase.dto';
 import { UpdatePurchaseDto } from '../dto/update-purchase.dto';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Purchases')
 @Controller('purchases')
 export class PurchasesController {
   constructor(private readonly purchasesService: PurchasesService) {}
@@ -27,7 +29,7 @@ export class PurchasesController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.purchasesService.findOne(+id);
+    return this.purchasesService.findOne(id);
   }
 
   @Patch(':id')
@@ -35,11 +37,11 @@ export class PurchasesController {
     @Param('id') id: string,
     @Body() updatePurchaseDto: UpdatePurchaseDto,
   ) {
-    return this.purchasesService.update(+id, updatePurchaseDto);
+    return this.purchasesService.update(id, updatePurchaseDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.purchasesService.remove(+id);
+    return this.purchasesService.remove(id);
   }
 }
